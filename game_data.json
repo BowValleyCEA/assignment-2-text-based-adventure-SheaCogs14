@@ -1,5 +1,64 @@
 {
-  "GameName": "Assignment 2",
-  "Description": "Some game description for Assignment 2",
-  "Rooms":  [{"Name":"Living Room","Reference":"living_room","Description":"Place where people live, I guess."}, {"Name":"Dining Room","Reference":"dining_room","Description":"A dining for rooms"}]
+  "GameName": "Space Station Escape",
+  "Description": "You are stationed on the Space Z Station in low earth orbit.",
+  "Rooms": [
+    {
+      "Name": "Living Quarters",
+      "Reference": "living_room",
+      "Description": "The living room has items scattered everywhere. The alarm is blaring in the background.",
+      "connections": {
+        "east": "control_room",
+        "north": "escapepod_room"
+      },
+      "objects": [
+        {
+          "name": "keycard",
+          "description": "A keycard used to access restricted areas.",
+          "state": "unused"
+        }
+      ]
+    },
+    {
+      "Name": "Escape Pod Room",
+      "Reference": "escapepod_room",
+      "Description": "You enter the escape pod room to find only one pod left. The loud alarm continues to deafen you.",
+      "connections": {},
+      "objects": []
+    },
+    {
+      "Name": "Engine Room",
+      "Reference": "engine_room",
+      "Description": "A massive engine used to power the station, but it is currently shut off.",
+      "connections": {
+        "west": "control_room"
+      },
+      "objects": []
+    },
+    {
+      "Name": "Airlock",
+      "Reference": "air_lock",
+      "Description": "The airlock appears to be intact. Thank god, you don't want to get sucked into space.",
+      "connections": {
+        "north": "control_room"
+      },
+      "objects": []
+    },
+    {
+      "Name": "Control Room",
+      "Reference": "control_room",
+      "Description": "A large control panel in the middle of  the room, controlling all aspects of the ship. Maybe you can use it to turn off the alarm.",
+      "connections": {
+        "south": "air_lock",
+        "west": "living_room",
+        "east": "engine_room"
+      },
+      "objects": [
+        {
+          "name": "control_panel",
+          "description": "A panel that controls the alarms. It looks complicated.",
+          "state": "on"
+        }
+      ]
+    }
+  ]
 }

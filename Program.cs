@@ -2,7 +2,7 @@
 using game1402_a2_starter;
 
 
-string fileName = "../../../game_data.json";//if you are ever worried about whether your json is valid or not, check out JSON Lint: 
+string fileName = "../../../game_data.json";
 
 GameData yourGameData;
 string jsonString = File.ReadAllText(@fileName);

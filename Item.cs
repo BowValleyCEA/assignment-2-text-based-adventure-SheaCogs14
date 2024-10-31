@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace game1402_a2_starter
 {
-
-
     [Serializable]
-    public class Room
+    public class Item
     {
         public string Name { get; set; }
-        public string Reference { get; set; }
         public string Description { get; set; }
-        public Dictionary<string, string> Connections { get; set; } = new Dictionary<string, string>();
+        public string State { get; set; }
 
-        public List<Item> items { get; set; } = new List<Item>(); 
-
-        public Room() { }
     }
-
 }

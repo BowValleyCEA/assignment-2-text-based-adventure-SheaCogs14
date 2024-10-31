@@ -9,7 +9,7 @@ namespace game1402_a2_starter
 {
     public class GameData
     {
-        public string GameName { get; set; } 
+        public string GameName { get; set; }
         public string Description { get; set; }
         public List<Room> Rooms { get; set; } = new List<Room>();
 
@@ -18,7 +18,8 @@ namespace game1402_a2_starter
     public class Game
     {
         private GameData _gameData;
-        private Room _currentRoom;
+        public Room _currentRoom;
+        private List<Item> _inventory = new List<Item>();
         public Game(GameData data)
         {
             _gameData = data;
@@ -39,8 +40,7 @@ namespace game1402_a2_starter
             string command;
             do
             {
-                Console.Clear();
-                Console.WriteLine($"\nYou are in {_currentRoom.Name}. {_currentRoom.Description}");
+                displayRoomInfo();
                 Console.Write("What do you want to do? ");
                 command = Console.ReadLine();
                 commandParse(command);
@@ -75,19 +75,35 @@ namespace game1402_a2_starter
         {
             if (cmds == "look")
             {
+                Console.Clear();
                 Console.WriteLine(_currentRoom.Description);
             }
-            
+            else if (cmds == "inventory")
+            {
+                if (_inventory.Count > 0)
+                {
+                    Console.WriteLine($"Inventory: {string.Join(",", _inventory.Select(item => item.Name))}");
+                }
+                else
+                {
+                    Console.WriteLine("Your inventory is empty!s");
+                }
+            }
             else
             {
                 Console.WriteLine("Invaild command");
             }
+
         }
         private void handleTwoCmd(string cmds1, string cmds2)
         {
             if (cmds1 == "go")
             {
                 moveToRoom(cmds2);
+            }
+            else if (cmds1 == "take")
+            {
+                grabItem(cmds2);
             }
             else
             {
@@ -97,7 +113,7 @@ namespace game1402_a2_starter
 
         private void handleThreeCmd(string cmds1, string cmds2, string cmds3)
         {
-            if (cmds1 == "take")
+            if (cmds1 == "use")
             {
                 Console.WriteLine("cmd4");
             }
@@ -114,7 +130,7 @@ namespace game1402_a2_starter
             if (cmds1 == "use")
             {
 
-                Console.WriteLine("cmd4");
+                useItem(cmds2, cmds4);
             }
             else
             {
@@ -135,13 +151,60 @@ namespace game1402_a2_starter
                 else
                 {
                     Console.WriteLine("You cant go that way.");
-                    Console.ReadLine();
+
                 }
             }
             else
             {
                 Console.WriteLine("You cant go that way.");
-                Console.ReadLine();
+
+            }
+        }
+
+
+        private void grabItem(string itemName)
+        {
+            foreach (Item item in _currentRoom.items)
+            {
+                if (item.Name == itemName)
+                {
+                    _inventory.Add(item);
+                    _currentRoom.items.Remove(item);
+                    Console.WriteLine($"You took the {itemName}.");
+                    return;
+                }
+            }
+            Console.WriteLine($"{itemName} does not exist.");
+
+        }
+        private void useItem(string itemName, string targetobj)
+        {
+
+
+        }
+
+
+        private void displayRoomInfo()
+        {
+            Console.WriteLine($"\nYou are in {_currentRoom.Name}. {_currentRoom.Description}");
+
+            if (_currentRoom.Connections.Count > 0)
+            {
+                Console.WriteLine("Connected rooms :");
+                foreach (var direction in _currentRoom.Connections.Keys)
+                {
+                    Console.WriteLine(direction);
+                }
+
+            }
+
+            if (_currentRoom.items.Count > 0)
+            {
+                Console.WriteLine(" Items in room :");
+                foreach (var item in _currentRoom.items)
+                {
+                    Console.WriteLine(item.Name);
+                }
             }
         }
 

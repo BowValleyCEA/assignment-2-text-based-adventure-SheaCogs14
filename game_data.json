@@ -6,58 +6,53 @@
       "Name": "Living Quarters",
       "Reference": "living_room",
       "Description": "The living room has items scattered everywhere. The alarm is blaring in the background.",
-      "connections": {
+      "Connections": {
         "east": "control_room",
         "north": "escapepod_room"
       },
-      "objects": [
+      "items": [
         {
-          "name": "keycard",
-          "description": "A keycard used to access restricted areas.",
-          "state": "unused"
+          "Name": "keycard",
+          "Description": "A keycard used to access restricted areas. Clearence level D1",
+          "State": "unused"
         }
       ]
     },
     {
       "Name": "Escape Pod Room",
       "Reference": "escapepod_room",
-      "Description": "You enter the escape pod room to find only one pod left. The loud alarm continues to deafen you.",
-      "connections": {},
-      "objects": []
+      "Description": "You enter the escape pod room to find only one pod left. The loud alarm continues to deafen you, there is a ",
+      "Connections": { "west": "living_room" },
+      "items": []
     },
     {
       "Name": "Engine Room",
       "Reference": "engine_room",
       "Description": "A massive engine used to power the station, but it is currently shut off.",
-      "connections": {
+      "Connections": {
         "west": "control_room"
       },
-      "objects": []
+      "items": []
     },
     {
       "Name": "Airlock",
       "Reference": "air_lock",
       "Description": "The airlock appears to be intact. Thank god, you don't want to get sucked into space.",
-      "connections": {
+      "Connections": {
         "north": "control_room"
       },
-      "objects": []
+      "items": []
     },
     {
       "Name": "Control Room",
       "Reference": "control_room",
-      "Description": "A large control panel in the middle of  the room, controlling all aspects of the ship. Maybe you can use it to turn off the alarm.",
-      "connections": {
+      "Description": "A large control panel in the middle of  the room, controlling all aspects of the ship.",
+      "Connections": {
         "south": "air_lock",
         "west": "living_room",
         "east": "engine_room"
       },
-      "objects": [
-        {
-          "name": "control_panel",
-          "description": "A panel that controls the alarms. It looks complicated.",
-          "state": "on"
-        }
+      "items": [
       ]
     }
   ]

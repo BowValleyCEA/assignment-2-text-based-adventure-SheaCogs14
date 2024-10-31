@@ -4,7 +4,6 @@ using game1402_a2_starter;
 
 string fileName = "../../../game_data.json";
 
-GameData yourGameData;
 string jsonString = File.ReadAllText(@fileName);
 GameData gameData = JsonSerializer.Deserialize<GameData>(jsonString);
 

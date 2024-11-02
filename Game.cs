@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-
+﻿
 namespace game1402_a2_starter
 {
     public class GameData
@@ -20,6 +14,9 @@ namespace game1402_a2_starter
         private GameData _gameData;
         public Room _currentRoom;
         private List<Item> _inventory = new List<Item>();
+
+        bool gameWon = false;
+
         public Game(GameData data)
         {
             _gameData = data;
@@ -38,12 +35,22 @@ namespace game1402_a2_starter
         private void UpdateGame()
         {
             string command;
+
             do
             {
                 displayRoomInfo();
                 Console.Write("What do you want to do? ");
                 command = Console.ReadLine();
                 commandParse(command);
+
+                if (gameWon)
+                {
+
+                    Console.WriteLine("You took the last escape pod! you will finally be able to return to earth!");
+                    Console.WriteLine("Thank you for playing!");
+                    break;
+
+                }
             } while (command != "quit");
         }
 
@@ -64,7 +71,7 @@ namespace game1402_a2_starter
                     handleThreeCmd(cmds[0], cmds[1], cmds[2]);
                     break;
                 case 4:
-                    handleFourthCmd(cmds[0], cmds[1], cmds[3], cmds[4]);
+                    handleFourthCmd(cmds[0], cmds[1], cmds[2], cmds[3]);
                     break;
 
             }
@@ -82,12 +89,23 @@ namespace game1402_a2_starter
             {
                 if (_inventory.Count > 0)
                 {
+                    Console.Clear();
                     Console.WriteLine($"Inventory: {string.Join(",", _inventory.Select(item => item.Name))}");
                 }
                 else
                 {
                     Console.WriteLine("Your inventory is empty!s");
                 }
+            }
+
+            else if (cmds == "sreach")
+            {
+                Console.WriteLine("You sreached the room and found");
+                foreach (var item in _currentRoom.items)
+                {
+                    Console.WriteLine(item.Name + item.Description);
+                }
+
             }
             else
             {
@@ -113,9 +131,9 @@ namespace game1402_a2_starter
 
         private void handleThreeCmd(string cmds1, string cmds2, string cmds3)
         {
-            if (cmds1 == "use")
+            if (cmds1 == "examine" && cmds2 == "item" && cmds3 == "closely")
             {
-                Console.WriteLine("cmd4");
+                examObj();
             }
             else
             {
@@ -146,6 +164,7 @@ namespace game1402_a2_starter
                 _currentRoom = _gameData.Rooms.FirstOrDefault(r => r.Reference == nextRoomReference);
                 if (_currentRoom != null)
                 {
+                    Console.Clear();
                     Console.WriteLine($"You have moved to {_currentRoom.Name}.");
                 }
                 else
@@ -177,9 +196,23 @@ namespace game1402_a2_starter
             Console.WriteLine($"{itemName} does not exist.");
 
         }
-        private void useItem(string itemName, string targetobj)
+        private void useItem(string itemName, string targetObj)
         {
+            var item = _inventory.FirstOrDefault(i => i.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
 
+            if (item == null)
+            {
+                Console.WriteLine($"You dont have that item {itemName}");
+                return;
+            }
+
+            if (item.Name.Equals("keycard", StringComparison.OrdinalIgnoreCase) && targetObj.Equals("door", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.Clear();
+                Console.WriteLine("You swiped the key card, the espace lights up and opens");
+
+                gameWon = true;
+            }
 
         }
 
@@ -197,14 +230,17 @@ namespace game1402_a2_starter
                 }
 
             }
+        }
 
-            if (_currentRoom.items.Count > 0)
+        private void examObj()
+        {
+            var keycard = _inventory.FirstOrDefault(i => i.Name.Equals("Keycard", StringComparison.OrdinalIgnoreCase));
+
+            if (keycard != null)
             {
-                Console.WriteLine(" Items in room :");
-                foreach (var item in _currentRoom.items)
-                {
-                    Console.WriteLine(item.Name);
-                }
+                Console.Clear();
+                Console.WriteLine("You looked at the keycard closey");
+                Console.WriteLine(keycard.Description);
             }
         }
 

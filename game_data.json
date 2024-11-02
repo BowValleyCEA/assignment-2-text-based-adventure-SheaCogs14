@@ -1,6 +1,6 @@
 {
   "GameName": "Space Station Escape",
-  "Description": "You are stationed on the Space Z Station in low earth orbit.",
+  "Description": "You are stationed on the Space Z Station in low earth orbit in the year 2049.",
   "Rooms": [
     {
       "Name": "Living Quarters",
@@ -52,8 +52,7 @@
         "west": "living_room",
         "east": "engine_room"
       },
-      "items": [
-      ]
+      "items": []
     }
   ]
 }
